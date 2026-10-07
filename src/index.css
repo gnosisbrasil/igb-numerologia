@@ -370,107 +370,99 @@ main {
   margin-bottom: 1.4rem;
 }
 
-.arcano-grade {
+.mapa-grade {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.1rem;
+  align-items: stretch;
 }
 
 @media (min-width: 640px) {
-  .arcano-grade {
+  .mapa-grade {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 960px) {
-  .arcano-grade {
+  .mapa-grade {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.arcano-card {
+.mapa-card {
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 18px;
-  padding: 1.3rem 1.3rem 1.1rem;
+  padding: 1.7rem 1.2rem 1.4rem;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
-}
-
-.arcano-topo {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-template-areas:
-    "valor rotulo chevron"
-    "valor titulo chevron";
-  column-gap: 0.9rem;
   align-items: center;
-  background: none;
-  border: 0;
+  gap: 0.5rem;
   cursor: pointer;
-  text-align: left;
   font-family: inherit;
-  padding: 0;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.arcano-valor {
-  grid-area: valor;
-  font-family: var(--font-display);
-  font-size: 2.6rem;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--navy);
-  min-width: 2ch;
+.mapa-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(35, 80, 160, 0.45);
 }
 
-.arcano-valor.longo {
-  font-size: 1.45rem;
-  font-weight: 600;
-}
-
-.arcano-rotulo {
-  grid-area: rotulo;
-  font-size: 0.75rem;
+.mapa-rotulo {
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-.arcano-titulo {
-  grid-area: titulo;
+.mapa-valor {
   font-family: var(--font-display);
-  font-size: 1.02rem;
+  font-size: 3.4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--navy-dark);
+}
+
+.mapa-card:hover .mapa-valor {
+  color: var(--navy);
+}
+
+.mapa-valor.longo {
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.mapa-sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.98rem;
   color: var(--ink);
 }
 
-.arcano-chevron {
-  grid-area: chevron;
-  color: var(--muted);
+.mapa-cta {
+  margin-top: 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mapa-cta::after {
+  content: "→";
   transition: transform 0.2s ease;
 }
 
-.arcano-chevron.aberto {
-  transform: rotate(180deg);
-}
-
-.arcano-texto {
-  font-size: 0.88rem;
-  color: #334155;
-  white-space: pre-line;
-  border-top: 1px dashed var(--line);
-  padding-top: 0.8rem;
-  max-height: 260px;
-  overflow-y: auto;
-}
-
-.arcano-acoes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: auto;
+.mapa-card:hover .mapa-cta::after {
+  transform: translateX(3px);
 }
 
 .btn-mini {
@@ -965,11 +957,41 @@ main {
   border-color: var(--gnosis-red);
 }
 
-.modal h2 {
+.modal-rotulo {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.modal-valor {
   font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.1;
   color: var(--navy-dark);
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
+  margin-top: 0.2rem;
+}
+
+.modal-sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ink);
+  margin-top: 0.2rem;
+}
+
+.modal-secao {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--navy);
+  text-align: left;
+  margin: 1.4rem 0 0.5rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
 }
 
 .modal-texto {
@@ -979,8 +1001,12 @@ main {
   color: #334155;
 }
 
-.modal .btn-primario {
-  margin-top: 1.4rem;
+.modal-acoes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
 }
 
 .toast {
@@ -1094,16 +1120,20 @@ input:focus-visible {
     padding: 0.65rem 0.7rem;
   }
 
-  .arcano-valor {
-    font-size: 2.2rem;
+  .mapa-card {
+    padding: 1.4rem 1rem 1.2rem;
   }
 
-  .arcano-valor.longo {
-    font-size: 1.2rem;
+  .mapa-valor {
+    font-size: 2.8rem;
   }
 
-  .arcano-card {
-    padding: 1.1rem 1rem 1rem;
+  .mapa-valor.longo {
+    font-size: 1.35rem;
+  }
+
+  .modal-valor {
+    font-size: 2rem;
   }
 
   .hora-tonica {

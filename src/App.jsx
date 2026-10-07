@@ -8,7 +8,7 @@ import {
   linkWhatsApp,
   validarDataBR,
 } from './lib/numerologia';
-import { ARCANO_TITULO, ARCANOS, EXPLICACOES, LOGOS_TEXTO, SIGNOS_TEXTO } from './lib/conteudo';
+import { ARCANO_TITULO, ARCANOS, EXPLICACOES, LOGOS_SUBTITULO, LOGOS_TEXTO, SIGNOS_TEXTO } from './lib/conteudo';
 
 const STORAGE_KEY = 'dadosUsuario';
 
@@ -72,30 +72,18 @@ function WhatsappIcon({ size = 18 }) {
   );
 }
 
-function CartaoArcano({ rotulo, valor, titulo, texto, explicacao, abrirModal, busca, buscaUrl, longo }) {
-  const [aberto, setAberto] = useState(false);
+function CartaoArcano({ rotulo, valor, subtitulo, calculo, significado, busca, buscaUrl, longo, abrirModal }) {
   return (
-    <article className="arcano-card">
-      <button type="button" className="arcano-topo" onClick={() => setAberto((v) => !v)} aria-expanded={aberto}>
-        <span className={`arcano-valor${longo ? ' longo' : ''}`}>{valor}</span>
-        <span className="arcano-rotulo">{rotulo}</span>
-        {titulo && <span className="arcano-titulo">{titulo}</span>}
-        <span className={`arcano-chevron ${aberto ? 'aberto' : ''}`}>
-          <Icone d={ICONS.chevron} size={16} />
-        </span>
-      </button>
-      {aberto && <p className="arcano-texto">{texto}</p>}
-      <div className="arcano-acoes">
-        <button type="button" className="btn-mini" onClick={() => abrirModal(rotulo, explicacao)}>
-          Saber mais
-        </button>
-        {busca && (
-          <a className="btn-mini busca" href={buscaUrl} target="_blank" rel="noopener noreferrer">
-            <Icone d={ICONS.busca} size={14} /> Pesquisar “{busca}”
-          </a>
-        )}
-      </div>
-    </article>
+    <button
+      type="button"
+      className="mapa-card"
+      onClick={() => abrirModal({ rotulo, valor, subtitulo, calculo, significado, busca, buscaUrl })}
+    >
+      <span className="mapa-rotulo">{rotulo}</span>
+      <span className={`mapa-valor${longo ? ' longo' : ''}`}>{valor}</span>
+      {subtitulo && <span className="mapa-sub">{subtitulo}</span>}
+      <span className="mapa-cta">Ler significado</span>
+    </button>
   );
 }
 
@@ -108,7 +96,7 @@ export default function App() {
   const [toast, setToast] = useState('');
   const [secao, setSecao] = useState(null);
 
-  const abrirModal = useCallback((titulo, texto) => setModal({ titulo, texto }), []);
+  const abrirModal = useCallback((cartao) => setModal(cartao), []);
 
   const mostrarToast = useCallback((msg) => {
     setToast(msg);
@@ -193,33 +181,33 @@ export default function App() {
         id: 'urgencia',
         rotulo: 'Urgência Interior',
         valor: resultado.urgenciaInterior,
-        titulo: `Arcano ${resultado.urgenciaInterior} — ${ARCANO_TITULO[resultado.urgenciaInterior]}`,
-        texto: ARCANOS[resultado.urgenciaInterior],
-        explicacao: EXPLICACOES.urgencia,
+        subtitulo: `Arcano ${resultado.urgenciaInterior} — ${ARCANO_TITULO[resultado.urgenciaInterior]}`,
+        significado: ARCANOS[resultado.urgenciaInterior],
+        calculo: EXPLICACOES.urgencia,
       },
       {
         id: 'tonica',
         rotulo: 'Tônica Fundamental',
         valor: resultado.tonicaFundamental,
-        titulo: `Arcano ${resultado.tonicaFundamental} — ${ARCANO_TITULO[resultado.tonicaFundamental]}`,
-        texto: ARCANOS[resultado.tonicaFundamental],
-        explicacao: EXPLICACOES.tonica,
+        subtitulo: `Arcano ${resultado.tonicaFundamental} — ${ARCANO_TITULO[resultado.tonicaFundamental]}`,
+        significado: ARCANOS[resultado.tonicaFundamental],
+        calculo: EXPLICACOES.tonica,
       },
       {
         id: 'dia',
         rotulo: 'Tônica do Dia',
         valor: resultado.tonicaDoDia,
-        titulo: `Arcano ${resultado.tonicaDoDia} — ${ARCANO_TITULO[resultado.tonicaDoDia]}`,
-        texto: ARCANOS[resultado.tonicaDoDia],
-        explicacao: EXPLICACOES.dia,
+        subtitulo: `Arcano ${resultado.tonicaDoDia} — ${ARCANO_TITULO[resultado.tonicaDoDia]}`,
+        significado: ARCANOS[resultado.tonicaDoDia],
+        calculo: EXPLICACOES.dia,
       },
       {
         id: 'signo',
         rotulo: 'Signo Zodiacal',
         valor: resultado.signoZodiacal,
-        titulo: null,
-        texto: SIGNOS_TEXTO[resultado.signoZodiacal],
-        explicacao: EXPLICACOES.signo,
+        subtitulo: 'Aspectos antagônicos',
+        significado: SIGNOS_TEXTO[resultado.signoZodiacal],
+        calculo: EXPLICACOES.signo,
         busca: resultado.signoZodiacal,
         longo: true,
       },
@@ -227,9 +215,9 @@ export default function App() {
         id: 'zodiaco',
         rotulo: 'Zodíaco Regente',
         valor: resultado.zodiacoRegente,
-        titulo: null,
-        texto: SIGNOS_TEXTO[resultado.zodiacoRegente],
-        explicacao: EXPLICACOES.zodiaco,
+        subtitulo: 'Aspectos antagônicos',
+        significado: SIGNOS_TEXTO[resultado.zodiacoRegente],
+        calculo: EXPLICACOES.zodiaco,
         busca: resultado.zodiacoRegente,
         longo: true,
       },
@@ -237,9 +225,9 @@ export default function App() {
         id: 'logos',
         rotulo: 'Logos Regente',
         valor: resultado.logosRegente,
-        titulo: null,
-        texto: LOGOS_TEXTO[resultado.logosRegente],
-        explicacao: EXPLICACOES.logos,
+        subtitulo: LOGOS_SUBTITULO[resultado.logosRegente],
+        significado: LOGOS_TEXTO[resultado.logosRegente],
+        calculo: EXPLICACOES.logos,
         busca: resultado.logosRegente === 'Nenhum' ? null : resultado.logosRegente,
         longo: true,
       },
@@ -399,17 +387,17 @@ export default function App() {
                 </div>
               </div>
 
-              <p className="dica">Toque em um cartão para ler o significado, ou em “Saber mais” para ver como o número é calculado.</p>
+              <p className="dica">Toque em um cartão para ler o significado completo.</p>
 
-              <div className="arcano-grade">
+              <div className="mapa-grade">
                 {cartoes.map((c) => (
                   <CartaoArcano
                     key={c.id}
                     rotulo={c.rotulo}
                     valor={c.valor}
-                    titulo={c.titulo}
-                    texto={c.texto}
-                    explicacao={c.explicacao}
+                    subtitulo={c.subtitulo}
+                    calculo={c.calculo}
+                    significado={c.significado}
                     abrirModal={abrirModal}
                     busca={c.busca}
                     buscaUrl={c.busca ? `${BUSCA_URL}${encodeURIComponent(c.busca)}` : undefined}
@@ -546,15 +534,27 @@ export default function App() {
 
       {modal && (
         <div className="modal-fundo" onClick={() => setModal(null)}>
-          <div className="modal" role="dialog" aria-modal="true" aria-label={modal.titulo} onClick={(e) => e.stopPropagation()}>
+          <div className="modal" role="dialog" aria-modal="true" aria-label={modal.rotulo} onClick={(e) => e.stopPropagation()}>
             <button type="button" className="modal-fechar" onClick={() => setModal(null)} aria-label="Fechar">
               <Icone d={ICONS.fechar} size={16} />
             </button>
-            <h2>{modal.titulo}</h2>
-            <div className="modal-texto">{modal.texto}</div>
-            <button type="button" className="btn-primario" onClick={() => setModal(null)}>
-              Fechar
-            </button>
+            <p className="modal-rotulo">{modal.rotulo}</p>
+            <p className="modal-valor">{modal.valor}</p>
+            {modal.subtitulo && <p className="modal-sub">{modal.subtitulo}</p>}
+            <h3 className="modal-secao">Significado</h3>
+            <div className="modal-texto">{modal.significado}</div>
+            <h3 className="modal-secao">Como é calculado</h3>
+            <div className="modal-texto">{modal.calculo}</div>
+            <div className="modal-acoes">
+              {modal.busca && (
+                <a className="btn-mini busca" href={modal.buscaUrl} target="_blank" rel="noopener noreferrer">
+                  <Icone d={ICONS.busca} size={14} /> Pesquisar “{modal.busca}” na Busca Gnosis
+                </a>
+              )}
+              <button type="button" className="btn-primario" onClick={() => setModal(null)}>
+                Fechar
+              </button>
+            </div>
           </div>
         </div>
       )}

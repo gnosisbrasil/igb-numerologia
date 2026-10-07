@@ -249,6 +249,17 @@ ${FONTES_LOGOS}`,
   Nenhum: 'No dia do aniversário não há regência de nenhum Logos, por isso é recomendado não correr riscos neste dia.',
 };
 
+export const LOGOS_SUBTITULO = {
+  Gabriel: 'Anjo da Lua',
+  Raphael: 'Anjo de Mercúrio',
+  Uriel: 'Anjo de Vênus',
+  Michael: 'Anjo do Sol',
+  Samael: 'Anjo de Marte',
+  Zachariel: 'Anjo de Júpiter',
+  Orifiel: 'Anjo de Saturno',
+  Nenhum: 'Dia do aniversário',
+};
+
 export const EXPLICACOES = {
   urgencia: `Refere-se ao impulso interno mais profundo do ser — aquilo que sua alma busca realizar com urgência nesta existência. É calculada pela soma dos dígitos da data de nascimento, reduzida à unidade, revelando tendências e desafios pessoais.
 
