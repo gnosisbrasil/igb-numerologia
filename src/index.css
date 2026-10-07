@@ -132,13 +132,31 @@ main {
     url("/galaxy-bg.webp") center / cover no-repeat;
   color: #f8fafc;
   text-align: center;
-  padding: clamp(3rem, 7vw, 5rem) 1.25rem clamp(3.5rem, 8vw, 5.5rem);
+  padding: clamp(2.5rem, 6vh, 4rem) 1.25rem clamp(3rem, 7vh, 5rem);
   position: relative;
+  min-height: calc(100vh - 65px);
+  min-height: calc(100dvh - 65px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-interno {
   max-width: 760px;
   margin-inline: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-logo {
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+  margin-bottom: 1.1rem;
+  filter: drop-shadow(0 0 18px rgba(236, 200, 5, 0.5));
 }
 
 .hero-eyebrow {
@@ -183,6 +201,7 @@ main {
   padding: 1.5rem;
   text-align: left;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  width: 100%;
 }
 
 .form-linha {
@@ -1076,6 +1095,11 @@ input:focus-visible {
 
   .hero {
     padding: 2.2rem 1rem 2.8rem;
+  }
+
+  .hero-logo {
+    width: 72px;
+    height: 72px;
   }
 
   .hero-sub {

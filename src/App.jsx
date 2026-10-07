@@ -289,13 +289,16 @@ export default function App() {
       <main>
         <section className="hero">
           <div className="hero-interno">
-            <p className="hero-eyebrow">Cabala · Tarot · Autoconhecimento</p>
+            <img src="/logoGnosis.png" alt="Logo Gnosis" className="hero-logo" width="92" height="92" />
+            <p className="hero-eyebrow">Kabala · Tarot · Autoconhecimento</p>
             <h1>
-              Descubra os números <em>da sua existência</em>
+              Numerologia <em>Gnóstica</em>
             </h1>
             <p className="hero-sub">
-              Informe seu nome completo de nascimento e a data de nascimento para revelar a urgência
-              interior, a tônica fundamental, a tônica do dia e as regências do seu ciclo atual.
+              A Kabala dos números revela as forças que regem a sua existência: a Urgência
+              Interior, a Tônica Fundamental, a Tônica do Dia e as regências zodiacais e
+              planetárias do seu ciclo atual — calculadas a partir do nome completo e da
+              data de nascimento.
             </p>
 
             <form
