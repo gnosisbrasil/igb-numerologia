@@ -41,6 +41,29 @@ const ICONS = {
   chevron: 'M6 9l6 6 6-6',
 };
 
+const SOCIALS = [
+  {
+    title: 'YouTube',
+    href: 'https://youtube.com/gnosisbrasilcanal',
+    svg: '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>',
+  },
+  {
+    title: 'Instagram',
+    href: 'https://instagram.com/gnosisbrasil',
+    svg: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>',
+  },
+  {
+    title: 'Facebook',
+    href: 'https://facebook.com/gnosisbrasil',
+    svg: '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>',
+  },
+  {
+    title: 'TikTok',
+    href: 'https://www.tiktok.com/@gnosisbrasil',
+    svg: '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>',
+  },
+];
+
 function WhatsappIcon({ size = 18 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -49,12 +72,12 @@ function WhatsappIcon({ size = 18 }) {
   );
 }
 
-function CartaoArcano({ rotulo, valor, titulo, texto, explicacao, abrirModal, busca, buscaUrl }) {
+function CartaoArcano({ rotulo, valor, titulo, texto, explicacao, abrirModal, busca, buscaUrl, longo }) {
   const [aberto, setAberto] = useState(false);
   return (
     <article className="arcano-card">
       <button type="button" className="arcano-topo" onClick={() => setAberto((v) => !v)} aria-expanded={aberto}>
-        <span className="arcano-valor">{valor}</span>
+        <span className={`arcano-valor${longo ? ' longo' : ''}`}>{valor}</span>
         <span className="arcano-rotulo">{rotulo}</span>
         {titulo && <span className="arcano-titulo">{titulo}</span>}
         <span className={`arcano-chevron ${aberto ? 'aberto' : ''}`}>
@@ -154,6 +177,15 @@ export default function App() {
     document.getElementById('resultados')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, [resultado]);
 
+  useEffect(() => {
+    if (!modal) return;
+    const fechar = (e) => {
+      if (e.key === 'Escape') setModal(null);
+    };
+    window.addEventListener('keydown', fechar);
+    return () => window.removeEventListener('keydown', fechar);
+  }, [modal]);
+
   const cartoes = useMemo(() => {
     if (!resultado) return [];
     return [
@@ -189,6 +221,7 @@ export default function App() {
         texto: SIGNOS_TEXTO[resultado.signoZodiacal],
         explicacao: EXPLICACOES.signo,
         busca: resultado.signoZodiacal,
+        longo: true,
       },
       {
         id: 'zodiaco',
@@ -198,6 +231,7 @@ export default function App() {
         texto: SIGNOS_TEXTO[resultado.zodiacoRegente],
         explicacao: EXPLICACOES.zodiaco,
         busca: resultado.zodiacoRegente,
+        longo: true,
       },
       {
         id: 'logos',
@@ -207,6 +241,7 @@ export default function App() {
         texto: LOGOS_TEXTO[resultado.logosRegente],
         explicacao: EXPLICACOES.logos,
         busca: resultado.logosRegente === 'Nenhum' ? null : resultado.logosRegente,
+        longo: true,
       },
     ];
   }, [resultado]);
@@ -378,6 +413,7 @@ export default function App() {
                     abrirModal={abrirModal}
                     busca={c.busca}
                     buscaUrl={c.busca ? `${BUSCA_URL}${encodeURIComponent(c.busca)}` : undefined}
+                    longo={c.longo}
                   />
                 ))}
               </div>
@@ -423,33 +459,97 @@ export default function App() {
           </section>
         )}
 
-        <section className="cta">
-          <div className="container">
-            <h2>Quer aprender mais sobre Gnosis e como incluir o conhecimento desta ferramenta no seu dia a dia?</h2>
-            <p>Faça como milhares de pessoas no Brasil: entre para o grupo de WhatsApp da sede mais próxima a você e fique por dentro.</p>
-            <p className="cta-destaque">Será um prazer ter você conosco!</p>
-            <a className="btn-cta" href="https://gnosisbrasil.com/locais" target="_blank" rel="noopener noreferrer">
-              Participe para Saber Mais <Icone d={ICONS.seta} size={16} />
-            </a>
+        <section className="podcast-cta">
+          <div className="container podcast-cta-inner">
+            <img src="/logo-sol.png" alt="Selo Gnosis" className="podcast-cta-sol" />
+            <h2 className="podcast-cta-title">
+              Leve este conhecimento para o seu dia a dia. <br />
+              <span className="accent-gold">Encontre a sede mais próxima de você.</span>
+            </h2>
+            <p className="podcast-cta-desc">
+              Faça como milhares de pessoas no Brasil: entre para o grupo de WhatsApp da sede mais
+              próxima e fique por dentro. Será um prazer ter você conosco!
+            </p>
+            <div className="podcast-cta-actions">
+              <a href="https://gnosisbrasil.com/locais/" className="btn-podcast-cta" target="_blank" rel="noopener noreferrer">
+                Participe para Saber Mais →
+              </a>
+              <a href="https://wa.me/message/SGUYC2UIUPKSN1" className="btn-podcast-outline" target="_blank" rel="noopener noreferrer">
+                Atendimento WhatsApp
+              </a>
+            </div>
           </div>
         </section>
       </main>
 
-      <footer className="rodape">
-        <div className="container">
-          <p>
-            Instituto Gnosis Brasil © {new Date().getFullYear()} | gnosisbrasil.com
-          </p>
-          <p>
-            Tem alguma sugestão?{' '}
-            <a href="mailto:webmaster@gnosisbrasil.com">Fale Conosco!</a>
-          </p>
+      <footer className="site-footer">
+        <div className="footer-glow" aria-hidden="true"></div>
+
+        <div className="container footer-grid">
+          <div className="footer-brand">
+            <img src="/logo-sol.png" alt="Gnosis Brasil" />
+            <strong>Numerologia Gnóstica</strong>
+            <p>
+              Instituto Gnosis Brasil: Ciência e Cultura Humana em Busca do Ser. Uma
+              instituição filantrópica, baseada em voluntariado, dedicada à Sabedoria Universal.
+            </p>
+          </div>
+
+          <div className="footer-col">
+            <h4 className="footer-title">Conhecimento</h4>
+            <ul className="footer-links">
+              <li><a href="https://gnosisbrasil.com/" target="_blank" rel="noopener noreferrer"><span className="link-arrow">›</span> O que é Gnosis</a></li>
+              <li><a href="https://gnosisbrasil.com/artigos/" target="_blank" rel="noopener noreferrer"><span className="link-arrow">›</span> Artigos e Publicações</a></li>
+              <li><a href="https://gnosisbrasil.com/biblioteca/" target="_blank" rel="noopener noreferrer"><span className="link-arrow">›</span> Biblioteca Gnóstica</a></li>
+              <li><a href="https://gnosisbrasil.com/audios/" target="_blank" rel="noopener noreferrer"><span className="link-arrow">›</span> Áudios e Conferências</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-col">
+            <h4 className="footer-title">Estudos & Práticas</h4>
+            <ul className="footer-links">
+              <li><a href="https://gnosisbrasil.com/cursos/" target="_blank" rel="noopener noreferrer"><span className="link-arrow">›</span> Cursos Gratuitos</a></li>
+              <li><a href="https://gnosisbrasil.com/locais/" target="_blank" rel="noopener noreferrer"><span className="link-arrow">›</span> Sedes Presenciais</a></li>
+              <li><a href="https://gnosisbrasil.com/gnosis-pratica/" target="_blank" rel="noopener noreferrer"><span className="link-arrow">›</span> Gnosis Prática</a></li>
+              <li><a href="https://doar.gnosisbrasil.com" target="_blank" rel="noopener noreferrer"><span className="link-arrow">›</span> Doações</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-col">
+            <h4 className="footer-title">Conexão</h4>
+            <div className="footer-social-row">
+              {SOCIALS.map((s) => (
+                <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className="social-icon-box" title={s.title} dangerouslySetInnerHTML={{ __html: s.svg }}></a>
+              ))}
+            </div>
+            <div className="footer-actions">
+              <a href="https://wa.me/message/SGUYC2UIUPKSN1" target="_blank" rel="noopener noreferrer" className="btn-wsp-footer">
+                <WhatsappIcon size={18} />
+                Atendimento WhatsApp
+              </a>
+              <a href="https://gnosisbrasil.com/locais/" className="btn-sedes-footer" target="_blank" rel="noopener noreferrer">Encontrar uma Sede</a>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <div className="container footer-bottom-inner">
+            <p>© {new Date().getFullYear()} INSTITUTO GNOSIS BRASIL.</p>
+            <div className="footer-bottom-links">
+              <a href="mailto:webmaster@gnosisbrasil.com">Fale Conosco</a>
+              <a href="https://doar.gnosisbrasil.com" target="_blank" rel="noopener noreferrer">Doações</a>
+              <a href="https://gnosisbrasil.com/contato/" target="_blank" rel="noopener noreferrer">Contato</a>
+            </div>
+          </div>
         </div>
       </footer>
 
       {modal && (
         <div className="modal-fundo" onClick={() => setModal(null)}>
           <div className="modal" role="dialog" aria-modal="true" aria-label={modal.titulo} onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="modal-fechar" onClick={() => setModal(null)} aria-label="Fechar">
+              <Icone d={ICONS.fechar} size={16} />
+            </button>
             <h2>{modal.titulo}</h2>
             <div className="modal-texto">{modal.texto}</div>
             <button type="button" className="btn-primario" onClick={() => setModal(null)}>
