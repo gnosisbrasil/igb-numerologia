@@ -27,4 +27,4 @@ npm run lint
 - `src/lib/conteudo.js` — textos dos arcanos, signos, logos e explicações
 - `src/App.jsx` — telas (formulário, mapa, acontecimentos, anos, CTA)
 - `src/index.css` — identidade visual Gnosis
-- `public/` — `numeros-bg.webp` (Typus Arithmeticae, Margarita Philosophica, Gregor Reisch, 1503 — Boécio e Pitágoras, domínio público, via Wikimedia Commons), `logo-sol.png`, `favicon.svg`
+- `public/` — `numeros-bg.webp` (Melencolia I, Albrecht Dürer, 1514 — quadrado mágico, domínio público, via Wikimedia Commons), `logo-sol.png`, `favicon.svg`
