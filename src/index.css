@@ -59,7 +59,7 @@ main {
 .hero {
   background:
     linear-gradient(180deg, rgba(14, 34, 66, 0.9) 0%, rgba(2, 6, 23, 0.97) 100%),
-    url("/sistina-bg.webp") center / cover no-repeat;
+    url("/numeros-bg.webp") center / cover no-repeat;
   color: #f8fafc;
   text-align: center;
   padding: clamp(2.5rem, 6vh, 4rem) 1.25rem clamp(3rem, 7vh, 5rem);
@@ -463,7 +463,7 @@ main {
 .faixa-escura {
   background:
     linear-gradient(180deg, rgba(2, 6, 23, 1) 0%, rgba(14, 34, 66, 0.97) 100%),
-    url("/sistina-bg.webp") center / cover no-repeat;
+    url("/numeros-bg.webp") center / cover no-repeat;
   color: #e2e8f0;
 }
 
@@ -561,7 +561,7 @@ main {
 .podcast-cta {
   background:
     linear-gradient(180deg, rgba(14, 34, 66, 0.96) 0%, rgba(2, 6, 23, 1) 100%),
-    url("/sistina-bg.webp") center / cover no-repeat;
+    url("/numeros-bg.webp") center / cover no-repeat;
   color: #ffffff;
   padding-block: clamp(4rem, 9vw, 6.5rem);
   position: relative;
