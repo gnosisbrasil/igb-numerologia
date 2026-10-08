@@ -270,22 +270,6 @@ export default function App() {
 
   return (
     <div className="pagina">
-      <header className="topo">
-        <div className="topo-interno">
-          <a className="marca" href="/" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-            <img src="/logoGnosis.png" alt="Logo Gnosis" width="44" height="44" />
-            <span className="marca-texto">
-              <strong>Numerologia Gnóstica</strong>
-              <small>Instituto Gnosis Brasil</small>
-            </span>
-          </a>
-          <nav className="topo-nav">
-            <a href="https://gnosisbrasil.com" target="_blank" rel="noopener noreferrer">Instituto</a>
-            <a href="https://busca.gnosisbrasil.com" target="_blank" rel="noopener noreferrer">Busca</a>
-          </nav>
-        </div>
-      </header>
-
       <main>
         <section className="hero">
           <div className="hero-interno">
